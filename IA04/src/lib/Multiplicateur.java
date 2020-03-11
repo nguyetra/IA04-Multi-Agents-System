@@ -3,16 +3,16 @@ import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.introspection.ACLMessage;
+import jade.lang.acl.ACLMessage;
 import lib.Factorielle.Receiver;
 
 public class Multiplicateur extends Agent  
 {
-	public class Receiver extends CyclicBehaviour 
+	protected class Receiver extends CyclicBehaviour 
 	{
 		 public void action() 
 		 {
-			jade.lang.acl.ACLMessage msg = receive();
+			ACLMessage msg = receive();
 				 
 			if (msg != null) 
 			{
@@ -21,7 +21,7 @@ public class Multiplicateur extends Agent
 				int command = Integer.parseInt(msg.getContent());
 				
 				//construct message type INFORM
-				jade.lang.acl.ACLMessage result = new jade.lang.acl.ACLMessage(jade.lang.acl.ACLMessage.INFORM);
+				ACLMessage result = new ACLMessage(ACLMessage.INFORM);
 				
 				result.addReceiver(msg.getSender());
 				

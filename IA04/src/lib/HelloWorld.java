@@ -1,25 +1,21 @@
 package lib;
 
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.introspection.ACLMessage;
 
 public class HelloWorld extends Agent 
 {
-	public class HelloWorldBehaviour extends Behaviour 
+	protected class HelloWorldBehaviour extends CyclicBehaviour 
 	{
 		 public void action() 
 		 {
-			 while (true)
-			 {
-		      		 
-				 jade.lang.acl.ACLMessage msg = receive();
+			 jade.lang.acl.ACLMessage msg = receive();
 				 
-				 if (msg != null) 
-				 {
-					 // Process the message
-					 System.out.println( "Contact from : " + msg.getSender() + "Content: " + msg.getContent());
-				 }
+			 if (msg != null) 
+			 {
+				 // Process the message
+				 System.out.println( "Contact from : " + msg.getSender() + "Content: " + msg.getContent());
 			 }
 		 }
 	}

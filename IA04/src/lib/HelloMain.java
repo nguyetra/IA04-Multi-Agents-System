@@ -1,3 +1,4 @@
+//Program inits 2 secondary containers
 package lib;
 
 import jade.core.ProfileImpl;
@@ -18,27 +19,23 @@ public class HelloMain {
 		{	
 			ProfileImpl p2 = new ProfileImpl(SECONDARY_PROPERTIES_FILE);
 		
-			ContainerController containerControiller1 = rt.createAgentContainer(p2);
+			//create first secondary container
+			ContainerController firstContainer = rt.createAgentContainer(p2);
 	
-			AgentController agent1 = containerControiller1.createNewAgent("HelloWorld1", 
-																		  "lib.HelloWorld", null);
-			AgentController agent2 = containerControiller1.createNewAgent("Factorielle", 
-																		  "lib.Factorielle", null);
+			AgentController hello1      = firstContainer.createNewAgent("HelloWorld1", "lib.HelloWorld", null);
+			AgentController factorielle = firstContainer.createNewAgent("Factorielle", "lib.Factorielle", null);
+			hello1.start();
+			factorielle.start();
 			
-			
-			
-			ContainerController containerControiller2 = rt.createAgentContainer(p2);
+			//create second secondary container
+			ContainerController secondContainer = rt.createAgentContainer(p2);
 
-			AgentController agent3 = containerControiller2.createNewAgent("HelloWorld3", 
-																	      "lib.HelloWorld", null);
+			AgentController hello2         = secondContainer.createNewAgent("HelloWorld2", "lib.HelloWorld", null);
 		
-			AgentController agent4 = containerControiller2.createNewAgent("Multiplicateur", 
-																	      "lib.Multiplicateur", null);
+			AgentController multiplicateur = secondContainer.createNewAgent("Multiplicateur", "lib.Multiplicateur", null);
 		
-			agent1.start();
-			agent2.start();
-			agent3.start();
-			agent4.start();
+			hello2.start();
+			multiplicateur.start();
 
 		} catch (Exception ex) 
 		{
@@ -47,6 +44,6 @@ public class HelloMain {
 
 	}
 	
-	public static String MAIN_PROPERTIES_FILE = "main_prop.txt";
-	public static String SECONDARY_PROPERTIES_FILE = "container1_prop.txt";
+	private static String MAIN_PROPERTIES_FILE      = "main_prop.txt";
+	private static String SECONDARY_PROPERTIES_FILE = "container1_prop.txt";
 }

@@ -1,23 +1,28 @@
 package lib;
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.introspection.ACLMessage;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 public class Factorielle extends Agent 
 {
-	public class Receiver extends CyclicBehaviour 
+	protected class RequestHandler extends CyclicBehaviour 
 	{
 		 public void action() 
 		 {
-			jade.lang.acl.ACLMessage msg = receive();
+			 //receive only REQUEST message
+			 MessageTemplate msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
+			 
+			 ACLMessage msg = receive(msgTemplate);
 				 
-			if (msg != null) 
-			{
-				
-				if (msg.getPerformative() == jade.lang.acl.ACLMessage.REQUEST)
+			 if (msg != null) 
+			 {
+				 if (msg.getPerformative() == ACLMessage.REQUEST)
 				{
+					ACLMessage forwardMessage = new ACLMessage(ACLMessage.REQUEST);
+					
+					
 					//forward request to multiplicateur
 					msg.setSender(new AID("Factorielle", AID.ISLOCALNAME));
 					
@@ -43,6 +48,6 @@ public class Factorielle extends Agent
 	{
 		System.out.println("Agent factorielle init!");
 		
-		addBehaviour(new Receiver());
+		addBehaviour(new RequestHandler());
 	}
 }

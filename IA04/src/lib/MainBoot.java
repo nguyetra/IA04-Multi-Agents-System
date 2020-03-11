@@ -1,3 +1,4 @@
+//program inits main container
 package lib;
 
 //Imports Jade 
@@ -14,26 +15,23 @@ public class MainBoot {
 	{
 		Runtime rt = Runtime.instance();
 		Profile p = null;
+		
 		try
 		{
+			//create main container
 			p = new ProfileImpl(MAIN_PROPERTIES_FILE);
-			AgentContainer mc = rt.createMainContainer(p);
+			AgentContainer mainContainer = rt.createMainContainer(p);
 
-			// ContainerController cc = rt.createAgentContainer(p);
-
-			AgentController agent = mc.createNewAgent("HelloWorld", "lib.HelloWorld", null);
+			// add agent HelloWorld to main container
+			AgentController agent = mainContainer.createNewAgent("HelloWorld", "lib.HelloWorld", null);
 
 			agent.start();
 		}
 		catch(Exception ex) 
 		{
-			System.out.println("Error" + ex);
+			ex.printStackTrace();
 		}
 	}
 
-
-
-	public static String MAIN_PROPERTIES_FILE = "main_prop.txt";
-
-
+	private static String MAIN_PROPERTIES_FILE = "main_prop.txt";
 }
